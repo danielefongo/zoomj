@@ -1,6 +1,5 @@
 module.exports = class Config {
-  constructor(inquirer, file) {
-    this.inquirer = inquirer
+  constructor(file) {
     this.file = file
   }
 
@@ -14,8 +13,7 @@ module.exports = class Config {
     this.rooms = []
   }
 
-  async add() {
-    let room = await this.inquirer.room(this)
+  async add(room) {
     this.rooms.push(room)
   }
 

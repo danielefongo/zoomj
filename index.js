@@ -12,7 +12,7 @@ const configFile = path.join(homedir(), '.zoomj.json')
 async function execute (command) {
   let inquirer = new Inquirer()
   let file = new File(configFile)
-  let config = new Config(inquirer, file)
+  let config = new Config(file)
 
   try {
     config.load()
@@ -23,7 +23,7 @@ async function execute (command) {
 
   switch (command) {
     case 'add':
-      await addRoom(config)
+      await addRoom(config, inquirer)
       break
     default:
       await joinRoom(config, inquirer)

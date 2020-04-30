@@ -7,8 +7,9 @@ async function joinRoom (config, inquirer) {
   new OpenCommand().run(`zoommtg://zoom.us/join?action=join&confno=${conferenceNumber}&pwd=${password}`)
 }
 
-async function addRoom (config) {
-  await config.add()
+async function addRoom (config, inquirer) {
+  let room = await inquirer.room(config)
+  await config.add(room)
   config.store()
 }
 

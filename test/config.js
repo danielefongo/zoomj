@@ -7,12 +7,10 @@ const Config = require('../src/config')
 
 describe('Config', () => {
   let sandbox
-  let inquirer
   let file
 
   beforeEach(() => {
     sandbox = sinon.createSandbox()
-    inquirer = new FakeInquirer()
     file = new FakeFile()
   })
 
@@ -25,14 +23,14 @@ describe('Config', () => {
 
     sandbox.stub(file, 'load').returns(asString({rooms: [room]}))
 
-    let config = new Config(inquirer, file)
+    let config = new Config(file)
     config.load()
 
     deepEqual(config.rooms, [room])
   })
 
   it('raise error when loading invalid file', () => {
-    let config = new Config(inquirer, file)
+    let config = new Config(file)
 
     assert.throws(() => {
       sandbox.stub(file, 'load').returns(asString({}))
@@ -56,7 +54,7 @@ describe('Config', () => {
     sandbox.stub(file, 'load').returns(asString({rooms: [room]}))
     let saveStub = sandbox.stub(file, 'save')
 
-    let config = new Config(inquirer, file)
+    let config = new Config(file)
     config.load()
     config.store()
 
@@ -68,12 +66,11 @@ describe('Config', () => {
     let new_room = aRoom('myroom', '123', 'pwd')
 
     sandbox.stub(file, 'load').returns(asString({rooms: []}))
-    sandbox.stub(inquirer, 'room').returns(resolved(new_room))
 
-    let config = new Config(inquirer, file)
+    let config = new Config(file)
     config.load()
 
-    await config.add()
+    await config.add(new_room)
 
     deepEqual(config.rooms, [new_room])
   }).timeout(100)
@@ -85,7 +82,7 @@ describe('Config', () => {
 
     sandbox.stub(file, 'load').returns(asString({rooms: rooms}))
 
-    let config = new Config(inquirer, file)
+    let config = new Config(file)
     config.load()
 
     deepEqual(config.canAddAlias('my room alias'), false)
@@ -95,10 +92,6 @@ describe('Config', () => {
   }).timeout(100)
 })
 
-class FakeInquirer {
-  async room (config) {}
-}
-
 class FakeFile {
   load () {}
   save (data) {}
@@ -106,10 +99,6 @@ class FakeFile {
 
 function aRoom (alias, room, password) {
   return { alias, room, password }
-}
-
-function resolved(result) {
-  return new Promise((resolve, reject) => {resolve(result)})
 }
 
 function asString(obj) {return JSON.stringify(obj)}
