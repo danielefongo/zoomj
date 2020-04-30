@@ -72,10 +72,25 @@ describe('Config', () => {
 
     deepEqual(config.rooms, [new_room])
   }).timeout(100)
+
+  it('validate configurations', () => {
+    let rooms = [
+      aRoom('my room alias', 'my room', 'pwd')
+    ]
+
+    sandbox.stub(file, 'load').returns({rooms: rooms})
+
+    let config = new Config(inquirer, file)
+
+    deepEqual(config.canAddAlias('my room alias'), false)
+    deepEqual(config.canAddAlias('new room alias'), true)
+    deepEqual(config.canAddRoom('my room'), false)
+    deepEqual(config.canAddRoom('new room'), true)
+  }).timeout(100)
 })
 
 class FakeInquirer {
-  async room () {}
+  async room (config) {}
 }
 
 class FakeFile {
