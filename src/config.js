@@ -2,10 +2,16 @@ module.exports = class Config {
   constructor(inquirer, file) {
     this.inquirer = inquirer
     this.file = file
+  }
 
-    let json = JSON.parse(file.load())
+  load() {
+    let json = JSON.parse(this.file.load())
     if (!json || !Array.isArray(json.rooms)) throw Error("Invalid json")
     this.rooms = json.rooms
+  }
+
+  loadBasic() {
+    this.rooms = []
   }
 
   async add() {

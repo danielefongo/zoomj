@@ -7,7 +7,6 @@ module.exports = class File {
 
   load() {
     try {
-      console.log(this.location)
       return fs.readFileSync(this.location).toString()
     } catch {
       throw Error(`Cannot load ${this.location}.`)

@@ -26,24 +26,27 @@ describe('Config', () => {
     sandbox.stub(file, 'load').returns(asString({rooms: [room]}))
 
     let config = new Config(inquirer, file)
+    config.load()
 
     deepEqual(config.rooms, [room])
   })
 
   it('raise error when loading invalid file', () => {
+    let config = new Config(inquirer, file)
+
     assert.throws(() => {
       sandbox.stub(file, 'load').returns(asString({}))
-      new Config(inquirer, file)
+      config.load()
     }, Error)
 
     assert.throws(() => {
       sandbox.stub(file, 'load').returns(null)
-      new Config(inquirer, file)
+      config.load()
     }, Error)
 
     assert.throws(() => {
       sandbox.stub(file, 'load').returns({rooms: "wtf"})
-      new Config(inquirer, file)
+      config.load()
     }, Error)
   })
 
@@ -54,6 +57,7 @@ describe('Config', () => {
     let saveStub = sandbox.stub(file, 'save')
 
     let config = new Config(inquirer, file)
+    config.load()
     config.store()
 
     lengthOf(saveStub.getCalls(), 1)
@@ -67,6 +71,7 @@ describe('Config', () => {
     sandbox.stub(inquirer, 'room').returns(resolved(new_room))
 
     let config = new Config(inquirer, file)
+    config.load()
 
     await config.add()
 
@@ -81,6 +86,7 @@ describe('Config', () => {
     sandbox.stub(file, 'load').returns(asString({rooms: rooms}))
 
     let config = new Config(inquirer, file)
+    config.load()
 
     deepEqual(config.canAddAlias('my room alias'), false)
     deepEqual(config.canAddAlias('new room alias'), true)
