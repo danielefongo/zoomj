@@ -3,7 +3,7 @@ module.exports = class Config {
     this.inquirer = inquirer
     this.file = file
 
-    let json = file.load()
+    let json = JSON.parse(file.load())
     if (!json || !Array.isArray(json.rooms)) throw Error("Invalid json")
     this.rooms = json.rooms
   }
@@ -14,7 +14,7 @@ module.exports = class Config {
   }
 
   async store() {
-    this.file.save({rooms: this.rooms})
+    this.file.save(JSON.stringify({rooms: this.rooms}))
   }
 
   canAddAlias(alias) {

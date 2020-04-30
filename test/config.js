@@ -23,7 +23,7 @@ describe('Config', () => {
   it('load from file', () => {
     let room = aRoom('myroom', '123', 'pwd')
 
-    sandbox.stub(file, 'load').returns({rooms: [room]})
+    sandbox.stub(file, 'load').returns(asString({rooms: [room]}))
 
     let config = new Config(inquirer, file)
 
@@ -32,7 +32,7 @@ describe('Config', () => {
 
   it('raise error when loading invalid file', () => {
     assert.throws(() => {
-      sandbox.stub(file, 'load').returns({})
+      sandbox.stub(file, 'load').returns(asString({}))
       new Config(inquirer, file)
     }, Error)
 
@@ -50,20 +50,20 @@ describe('Config', () => {
   it('store to file', () => {
     let room = aRoom('myroom', '123', 'pwd')
 
-    sandbox.stub(file, 'load').returns({rooms: [room]})
+    sandbox.stub(file, 'load').returns(asString({rooms: [room]}))
     let saveStub = sandbox.stub(file, 'save')
 
     let config = new Config(inquirer, file)
     config.store()
 
     lengthOf(saveStub.getCalls(), 1)
-    deepEqual(saveStub.firstCall.args[0], {rooms: [room]})
+    deepEqual(saveStub.firstCall.args[0], asString({rooms: [room]}))
   })
 
   it('add new room', async () => {
     let new_room = aRoom('myroom', '123', 'pwd')
 
-    sandbox.stub(file, 'load').returns({rooms: []})
+    sandbox.stub(file, 'load').returns(asString({rooms: []}))
     sandbox.stub(inquirer, 'room').returns(resolved(new_room))
 
     let config = new Config(inquirer, file)
@@ -78,7 +78,7 @@ describe('Config', () => {
       aRoom('my room alias', 'my room', 'pwd')
     ]
 
-    sandbox.stub(file, 'load').returns({rooms: rooms})
+    sandbox.stub(file, 'load').returns(asString({rooms: rooms}))
 
     let config = new Config(inquirer, file)
 
@@ -105,3 +105,5 @@ function aRoom (alias, room, password) {
 function resolved(result) {
   return new Promise((resolve, reject) => {resolve(result)})
 }
+
+function asString(obj) {return JSON.stringify(obj)}
