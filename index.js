@@ -22,7 +22,7 @@ function openCommand() {
 args = process.argv.slice(2)
 
 if (args.length < 2) {
-  console.log("usage: zoomj <conf-number> <password>")
+  console.log("usage: zoomj <conference-number> <password>")
   return
 }
 
