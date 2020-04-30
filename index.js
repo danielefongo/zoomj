@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { addRoom, joinRoom } = require('./src/functions')
+const { addRoom, joinRoom, removeRoom } = require('./src/functions')
 const Inquirer = require('./src/inquirer')
 const Config = require('./src/config')
 const File = require('./src/file')
@@ -24,6 +24,9 @@ async function execute (command) {
   switch (command) {
     case 'add':
       await addRoom(config, inquirer)
+      break
+    case 'remove':
+      await removeRoom(config, inquirer)
       break
     default:
       await joinRoom(config, inquirer)

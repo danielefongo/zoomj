@@ -13,4 +13,10 @@ async function addRoom (config, inquirer) {
   config.store()
 }
 
-module.exports = { joinRoom, addRoom }
+async function removeRoom (config, inquirer) {
+  let room = await inquirer.chooseRoom(config.rooms)
+  await config.remove(room)
+  config.store()
+}
+
+module.exports = { joinRoom, addRoom, removeRoom }

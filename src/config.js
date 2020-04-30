@@ -13,8 +13,12 @@ module.exports = class Config {
     this.rooms = []
   }
 
-  async add(room) {
+  add(room) {
     this.rooms.push(room)
+  }
+
+  remove(room) {
+    this.rooms = this.rooms.filter(it => it.alias !== room.alias)
   }
 
   async store() {

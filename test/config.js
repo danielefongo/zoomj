@@ -75,6 +75,20 @@ describe('Config', () => {
     deepEqual(config.rooms, [new_room])
   }).timeout(100)
 
+  it('remove room', async () => {
+    let room = aRoom('myroom', '123', 'pwd')
+    let sameRoom = aRoom('myroom', '123', 'pwd')
+
+    sandbox.stub(file, 'load').returns(asString({rooms: [room]}))
+
+    let config = new Config(file)
+    config.load()
+
+    await config.remove(sameRoom)
+
+    deepEqual(config.rooms, [])
+  }).timeout(100)
+
   it('validate configurations', () => {
     let rooms = [
       aRoom('my room alias', 'my room', 'pwd')
