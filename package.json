@@ -18,5 +18,6 @@
     "type": "git",
     "url": "git+https://github.com/danielefongo/zoomj.git"
   },
+  "license": "MIT",
   "dependencies": {}
 }
