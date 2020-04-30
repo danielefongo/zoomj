@@ -1,17 +1,34 @@
 #!/usr/bin/env node
 
-const OpenCommand = require('./src/open_command')
+const { addRoom, joinRoom } = require('./src/functions')
+const Inquirer = require('./src/inquirer')
+const Config = require('./src/config')
+const File = require('./src/file')
 
-args = process.argv.slice(2)
+const path = require('path')
+const { homedir } = require('os')
+const configFile = path.join(homedir(), '.zoomj.json')
 
-if (args.length < 2) {
-  console.log("usage: zoomj <conference-number> <password>")
-  return
+async function execute (command) {
+  let inquirer = new Inquirer()
+  let file = new File(configFile)
+  let config = new Config(inquirer, file)
+
+  try {
+    config.load()
+  } catch {
+    console.log('Cannot load config. Creating basic setup.')
+    config.loadBasic()
+  }
+
+  switch (command) {
+    case 'add':
+      await addRoom(config)
+      break
+    default:
+      await joinRoom(config, inquirer)
+  }
 }
 
-let conferenceNumber = args[0]
-let password = args[1]
-
-let url = `zoommtg://zoom.us/join?action=join&confno=${conferenceNumber}&pwd=${password}`
-
-new OpenCommand().run(url)
+command = process.argv.slice(2)[0]
+execute(command)
