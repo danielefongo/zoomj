@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Join zoom.us rooms easily",
   "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha test/**/*"
+  },
   "keywords": [
     "zoom.us",
     "zoom",
@@ -19,5 +22,10 @@
     "url": "git+https://github.com/danielefongo/zoomj.git"
   },
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.1.2",
+    "sinon": "^9.0.2"
+  }
 }
