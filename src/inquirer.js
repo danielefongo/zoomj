@@ -1,6 +1,9 @@
+const fuzzysort = require('fuzzysort')
+
 module.exports = class Inquirer {
   constructor () {
     this.instance = require('inquirer')
+    this.instance.registerPrompt('autocomplete-list', require('inquirer-autocomplete-prompt'))
   }
 
   async room (config) {
@@ -30,13 +33,18 @@ module.exports = class Inquirer {
 
     let answer = await this.instance.prompt([
       {
-        type: 'list',
+        type: 'autocomplete-list',
         name: 'room',
         message: 'Select room',
-        choices: choices
+        source: (_, id) => this.search(choices, id)
       }])
 
     return rooms.filter(it => it === answer.room)[0]
+  }
+
+  async search (objects, keyword) {
+    if (keyword === undefined || keyword === '') return objects
+    return fuzzysort.go(keyword, objects, { key: 'name' }).map(it => it.obj)
   }
 
   toChoices (rooms) {

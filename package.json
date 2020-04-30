@@ -1,6 +1,6 @@
 {
   "name": "zoomj",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Join zoom.us rooms easily",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "inquirer": "^7.1.0"
+    "fuzzysort": "^1.1.4",
+    "inquirer": "^7.1.0",
+    "inquirer-autocomplete-prompt": "^1.0.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",
