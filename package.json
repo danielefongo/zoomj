@@ -1,0 +1,22 @@
+{
+  "name": "zoomj",
+  "version": "0.0.1",
+  "description": "Join zoom.us rooms easily",
+  "main": "index.js",
+  "keywords": [
+    "zoom.us",
+    "zoom",
+    "join"
+  ],
+  "bin": {
+    "zoomj": "index.js"
+  },
+  "preferGlobal": true,
+  "author": "Daniele Fongo",
+  "homepage": "https://github.com/danielefongo/zoomj",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielefongo/zoomj.git"
+  },
+  "dependencies": {}
+}
