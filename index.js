@@ -25,7 +25,7 @@ async function execute (params) {
       addRoom(config, params.slice(1)).catch(logError)
       break
     case 'remove':
-      removeRoom(config).catch(logError)
+      removeRoom(config, params.slice(1)).catch(logError)
       break
     default:
       joinRoom(config).catch(logError)

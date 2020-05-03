@@ -88,19 +88,29 @@ describe('Config', () => {
     }, new Error("Duplicated room."))
   })
 
-  it('remove room', async () => {
+  it('remove room', () => {
     let room = aRoom('myroom', '123', 'pwd')
-    let sameRoom = aRoom('myroom', '123', 'pwd')
 
     sandbox.stub(file, 'load').returns(asString({rooms: [room]}))
 
     let config = new Config(file)
     config.load()
 
-    await config.remove(sameRoom)
+    config.remove("myroom")
 
     deepEqual(config.rooms, [])
-  }).timeout(100)
+  })
+
+  it('deny removing room if not existing', () => {
+    sandbox.stub(file, 'load').returns(asString({rooms: []}))
+
+    let config = new Config(file)
+    config.load()
+
+    assert.throws(() => {
+      config.remove("roomAlias")
+    }, new Error("Not existing room."))
+  })
 
   it('validate configurations', () => {
     let rooms = [

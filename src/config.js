@@ -18,8 +18,10 @@ module.exports = class Config {
     this.rooms.push(room)
   }
 
-  remove(room) {
-    this.rooms = this.rooms.filter(it => it.alias !== room.alias)
+  remove(roomAlias) {
+    let newRooms = this.rooms.filter(it => it.alias !== roomAlias)
+    if (newRooms.length === this.rooms.length) throw new Error("Not existing room.")
+    this.rooms = newRooms
   }
 
   async store() {

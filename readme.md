@@ -29,9 +29,18 @@ zoomj add <wished-alias> <zoom-join-link>
 
 #### Removing a room
 
-You can remove a room using cli:
+You can remove a room in two ways:
+* cli version
+* link version
+
+For cli version, just run:
 ```
 zoomj remove
+```
+
+For link version, just run:
+```
+zoomj remove <alias>  
 ```
 
 #### Join a room

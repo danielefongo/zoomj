@@ -23,10 +23,16 @@ async function addRoom (config, params) {
   config.store()
 }
 
-async function removeRoom (config) {
-  let inquirer = new Inquirer()
-  let room = await inquirer.chooseRoom(config.rooms)
-  await config.remove(room)
+async function removeRoom (config, params) {
+  let alias
+  if (Array.isArray(params) && params.length === 1) {
+    alias = params[0]
+  } else {
+    let inquirer = new Inquirer()
+    room = await inquirer.chooseRoom(config.rooms)
+    alias = room.alias
+  }
+  await config.remove(alias)
   config.store()
 }
 
