@@ -24,7 +24,7 @@ zoomj add
 
 For link version, just run:
 ```
-zoomj add <wished-alias> <zoom-join-link>  
+zoomj add <wished-alias> <zoom-join-link>
 ```
 
 #### Removing a room
@@ -40,12 +40,21 @@ zoomj remove
 
 For link version, just run:
 ```
-zoomj remove <alias>  
+zoomj remove <alias>
 ```
 
 #### Join a room
 
-You can join a room using cli:
+You can join a room in two ways:
+* cli version
+* link version
+
+For cli version, just run:
 ```
 zoomj
+```
+
+For link version, just run:
+```
+zoomj <alias>
 ```
