@@ -1,20 +1,20 @@
 const OpenCommand = require('./openCommand')
 const Inquirer = require('./inquirer')
-const ZoomLinkParser = require('./zoomLinkParser')
+const ZoomLinkParser = require('./zoomLink')
 
 async function joinRoom (config) {
   let inquirer = new Inquirer()
+  let zoomLink = new ZoomLinkParser()
   let room = await inquirer.chooseRoom(config.rooms)
-  let conferenceNumber = room.room
-  let password = room.password
-  new OpenCommand().run(`zoommtg://zoom.us/join?action=join&confno=${conferenceNumber}&pwd=${password}`)
+  let url = zoomLink.generate(room)
+  new OpenCommand().run(url)
 }
 
 async function addRoom (config, params) {
   let room
   if (Array.isArray(params) && params.length === 2) {
-    let parser = new ZoomLinkParser()
-    room = parser.parse(params[0], params[1])
+    let zoomLink = new ZoomLinkParser()
+    room = zoomLink.parse(params[0], params[1])
   } else {
     let inquirer = new Inquirer()
     room = await inquirer.room(config)

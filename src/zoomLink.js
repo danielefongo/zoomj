@@ -1,6 +1,6 @@
 const url = require('url')
 
-module.exports = class ZoomLinkParser {
+module.exports = class ZoomLink {
   parse (alias, link) {
     let result = url.parse(link, true)
 
@@ -10,6 +10,13 @@ module.exports = class ZoomLinkParser {
       room: this.roomIdFrom(result.pathname),
       password: this.passwordFrom(result.query)
     }
+  }
+
+  generate(room) {
+    if(!room || !room.room || !room.password) throw new Error('Cannot generate link.')
+    let conferenceNumber = room.room
+    let password = room.password
+    return `zoommtg://zoom.us/join?action=join&confno=${conferenceNumber}&pwd=${password}`
   }
 
   passwordFrom (query) {
