@@ -1,4 +1,4 @@
-const OpenCommand = require('./open_command')
+const OpenCommand = require('./openCommand')
 const Inquirer = require('./inquirer')
 const ZoomLinkParser = require('./zoomLinkParser')
 
