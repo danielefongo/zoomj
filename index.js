@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const { addRoom, joinRoom, removeRoom } = require('./src/functions')
-const Inquirer = require('./src/inquirer')
 const Config = require('./src/config')
 const File = require('./src/file')
 
@@ -9,8 +8,8 @@ const path = require('path')
 const { homedir } = require('os')
 const configFile = path.join(homedir(), '.zoomj.json')
 
-async function execute (command) {
-  let inquirer = new Inquirer()
+async function execute (params) {
+  let command = params[0]
   let file = new File(configFile)
   let config = new Config(file)
 
@@ -23,15 +22,15 @@ async function execute (command) {
 
   switch (command) {
     case 'add':
-      await addRoom(config, inquirer)
+      await addRoom(config)
       break
     case 'remove':
-      await removeRoom(config, inquirer)
+      await removeRoom(config)
       break
     default:
-      await joinRoom(config, inquirer)
+      await joinRoom(config)
   }
 }
 
-command = process.argv.slice(2)[0]
-execute(command)
+params = process.argv.slice(2)
+execute(params)
