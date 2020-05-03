@@ -3,8 +3,6 @@ const Inquirer = require('./inquirer')
 const ZoomLinkParser = require('./zoomLink')
 
 async function joinRoom (config, params) {
-  console.log(config)
-  console.log(params)
   let room
   if (Array.isArray(params) && params.length === 1) {
     let alias = params[0]
