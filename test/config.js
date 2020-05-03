@@ -62,7 +62,7 @@ describe('Config', () => {
     deepEqual(saveStub.firstCall.args[0], asString({rooms: [room]}))
   })
 
-  it('add new room', async () => {
+  it('add new room', () => {
     let new_room = aRoom('myroom', '123', 'pwd')
 
     sandbox.stub(file, 'load').returns(asString({rooms: []}))
@@ -70,10 +70,23 @@ describe('Config', () => {
     let config = new Config(file)
     config.load()
 
-    await config.add(new_room)
+    config.add(new_room)
 
     deepEqual(config.rooms, [new_room])
-  }).timeout(100)
+  })
+
+  it('deny adding new room if duplicated', () => {
+    let new_room = aRoom('myroom', '123', 'pwd')
+
+    sandbox.stub(file, 'load').returns(asString({rooms: [aRoom('myroom', '123', 'pwd')]}))
+
+    let config = new Config(file)
+    config.load()
+
+    assert.throws(() => {
+      config.add(new_room)
+    }, new Error("Duplicated room."))
+  })
 
   it('remove room', async () => {
     let room = aRoom('myroom', '123', 'pwd')

@@ -14,6 +14,7 @@ module.exports = class Config {
   }
 
   add(room) {
+    if(!this.canAddAlias(room.alias) || !this.canAddRoom(room)) throw new Error("Duplicated room.")
     this.rooms.push(room)
   }
 
