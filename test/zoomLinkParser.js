@@ -37,5 +37,9 @@ describe('ZoomUrlParser', () => {
     assert.throws(() => {
       parser.parse(undefined, "any")
     }, new Error("Undefined alias."))
+
+    assert.throws(() => {
+      parser.parse("", "any")
+    }, new Error("Undefined alias."))
   })
 })

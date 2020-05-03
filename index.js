@@ -22,7 +22,7 @@ async function execute (params) {
 
   switch (command) {
     case 'add':
-      await addRoom(config)
+      await addRoom(config, params.slice(1))
       break
     case 'remove':
       await removeRoom(config)
