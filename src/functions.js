@@ -2,10 +2,19 @@ const OpenCommand = require('./openCommand')
 const Inquirer = require('./inquirer')
 const ZoomLinkParser = require('./zoomLink')
 
-async function joinRoom (config) {
-  let inquirer = new Inquirer()
+async function joinRoom (config, params) {
+  console.log(config)
+  console.log(params)
+  let room
+  if (Array.isArray(params) && params.length === 1) {
+    let alias = params[0]
+    room = config.search(alias)
+  } else {
+    let inquirer = new Inquirer()
+    room = await inquirer.chooseRoom(config.rooms)
+  }
+
   let zoomLink = new ZoomLinkParser()
-  let room = await inquirer.chooseRoom(config.rooms)
   let url = zoomLink.generate(room)
   new OpenCommand().run(url)
 }
@@ -19,6 +28,7 @@ async function addRoom (config, params) {
     let inquirer = new Inquirer()
     room = await inquirer.room(config)
   }
+
   await config.add(room)
   config.store()
 }
@@ -32,6 +42,7 @@ async function removeRoom (config, params) {
     room = await inquirer.chooseRoom(config.rooms)
     alias = room.alias
   }
+
   await config.remove(alias)
   config.store()
 }
