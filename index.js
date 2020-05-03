@@ -22,15 +22,17 @@ async function execute (params) {
 
   switch (command) {
     case 'add':
-      await addRoom(config, params.slice(1))
+      addRoom(config, params.slice(1)).catch(logError)
       break
     case 'remove':
-      await removeRoom(config)
+      removeRoom(config).catch(logError)
       break
     default:
-      await joinRoom(config)
+      joinRoom(config).catch(logError)
   }
 }
+
+function logError (it) { console.log(it.message)}
 
 params = process.argv.slice(2)
 execute(params)
