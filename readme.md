@@ -4,10 +4,39 @@
 
 ## Getting started
 
-To use zoomj just install it from npm and run it:
+### Installation
+
+You can install zoomj from nmp:
 ```
 npm install -g zoomj
-zoomj add # it will ask you to add an alias for your room
-zoomj remove # it will ask you to remove a room
-zoomj # it will ask you to select one of the stored rooms
+```
+
+#### Adding a room
+
+You can add a room in two ways:
+* cli version
+* link version
+
+For cli version, just run:
+```
+zoomj add
+```
+
+For link version, just run:
+```
+zoomj add <wished-alias> <zoom-join-link>  
+```
+
+#### Removing a room
+
+You can remove a room using cli:
+```
+zoomj remove
+```
+
+#### Join a room
+
+You can join a room using cli:
+```
+zoomj
 ```

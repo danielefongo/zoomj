@@ -1,6 +1,6 @@
 {
   "name": "zoomj",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Join zoom.us rooms easily",
   "main": "index.js",
   "scripts": {
