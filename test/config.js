@@ -75,6 +75,18 @@ describe('Config', () => {
     deepEqual(config.rooms, [new_room])
   })
 
+  it('search room', () => {
+    let room = aRoom('myroom', '123', 'pwd')
+
+    sandbox.stub(file, 'load').returns(asString({rooms: [room]}))
+
+    let config = new Config(file)
+    config.load()
+
+    deepEqual(config.search("myroom"), room)
+    deepEqual(config.search("notexisting"), undefined)
+  })
+
   it('deny adding new room if duplicated', () => {
     let new_room = aRoom('myroom', '123', 'pwd')
 

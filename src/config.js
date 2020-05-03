@@ -13,15 +13,18 @@ module.exports = class Config {
     this.rooms = []
   }
 
+  search(roomAlias) {
+    return this.rooms.filter(it => it.alias === roomAlias)[0]
+  }
+
   add(room) {
     if(!this.canAddAlias(room.alias) || !this.canAddRoom(room)) throw new Error("Duplicated room.")
     this.rooms.push(room)
   }
 
   remove(roomAlias) {
-    let newRooms = this.rooms.filter(it => it.alias !== roomAlias)
-    if (newRooms.length === this.rooms.length) throw new Error("Not existing room.")
-    this.rooms = newRooms
+    if (! this.search(roomAlias)) throw new Error("Not existing room.")
+    this.rooms = this.rooms.filter(it => it.alias !== roomAlias)
   }
 
   async store() {
