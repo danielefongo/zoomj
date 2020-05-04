@@ -28,7 +28,7 @@ module.exports = class Config {
   }
 
   async store() {
-    this.file.save(JSON.stringify({rooms: this.rooms}))
+    this.file.save(JSON.stringify({rooms: this.rooms}, null, 2))
   }
 
   canAddAlias(alias) {

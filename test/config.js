@@ -150,4 +150,4 @@ function aRoom (alias, room, password) {
   return { alias, room, password }
 }
 
-function asString(obj) {return JSON.stringify(obj)}
+function asString(obj) {return JSON.stringify(obj, null, 2)}
