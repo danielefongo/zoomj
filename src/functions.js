@@ -1,4 +1,5 @@
 const OpenCommand = require('./openCommand')
+const CopyCommand = require('./copyCommand')
 const Inquirer = require('./inquirer')
 const ZoomLinkParser = require('./zoomLink')
 
@@ -14,6 +15,8 @@ async function joinRoom (config, params) {
 
   let zoomLink = new ZoomLinkParser()
   let url = zoomLink.generate(room)
+  let invitation = zoomLink.invitation(room)
+  new CopyCommand().run(invitation)
   new OpenCommand().run(url)
 }
 
