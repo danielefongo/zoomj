@@ -64,4 +64,26 @@ describe('ZoomUrlParser', () => {
       parser.generate(room)
     }, new Error("Cannot generate link."))
   })
+
+  it('generate invitation from room', () => {
+    let roomId = "123"
+    let password = "pwd"
+    let parser = new ZoomLink()
+
+    let room = {alias: "any", room: roomId, password: password}
+
+    let url = parser.invitation(room)
+
+    deepEqual(url, `https://us04web.zoom.us/j/${roomId}?pwd=${password}`)
+  })
+
+  it('raise Error when failing to generate invitation', () => {
+    let parser = new ZoomLink()
+
+    let room = {alias: "any"}
+
+    assert.throws(() => {
+      parser.invitation(room)
+    }, new Error("Cannot generate link."))
+  })
 })

@@ -19,6 +19,13 @@ module.exports = class ZoomLink {
     return `zoommtg://zoom.us/join?action=join&confno=${conferenceNumber}&pwd=${password}`
   }
 
+  invitation(room) {
+    if(!room || !room.room || !room.password) throw new Error('Cannot generate link.')
+    let conferenceNumber = room.room
+    let password = room.password
+    return `https://us04web.zoom.us/j/${conferenceNumber}?pwd=${password}`
+  }
+
   passwordFrom (query) {
     if (!query || !query.pwd) throw new Error('Cannot parse link.')
     return query.pwd
