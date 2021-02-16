@@ -58,3 +58,5 @@ For link version, just run:
 ```
 zoomj <alias>
 ```
+
+It also copy invitation url on clipboard.
